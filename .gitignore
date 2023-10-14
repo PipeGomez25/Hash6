@@ -2,22 +2,29 @@
 #include <string>
 #include <vector>
 #include <bitset>
-using namespace std;
 
 int main() {
-    string palabra = "tengounavacalechera"; // Ejemplo de una palabra
-    vector<bitset<14>> gruposDe14Bits;
+    std::string palabra = "tengounavacalechera"; // Ejemplo de una palabra
+    std::vector<std::bitset<14>> gruposDe14Bits;
 
-    // Itera a través de la palabra para obtener grupos de 14 bits
-    for (size_t i = 0; i + 13 < palabra.length(); i += 14) {
-        string subcadena = palabra.substr(i, 14);
-        bitset<14> bits(subcadena);
+    size_t i = 0;
+    while (i < palabra.length()) {
+        std::string subcadena = palabra.substr(i, 14);
+
+        // Rellena con ceros si la subcadena es más corta que 14 caracteres
+        while (subcadena.length() < 14) {
+            subcadena += "0";
+        }
+
+        std::bitset<14> bits(subcadena);
         gruposDe14Bits.push_back(bits);
+
+        i += 14;
     }
 
     // Imprime los grupos de 14 bits
-    for (const bitset<14>& grupo : gruposDe14Bits) {
-        cout << "Grupo de 14 bits: " << grupo << " (Valor operable: " << grupo.to_ulong() << ")" << endl;
+    for (const std::bitset<14>& grupo : gruposDe14Bits) {
+        std::cout << "Grupo de 14 bits: " << grupo << " (Valor operable: " << grupo.to_ulong() << ")" << std::endl;
     }
 
     return 0;
