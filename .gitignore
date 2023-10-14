@@ -7,19 +7,24 @@ int main() {
     std::string palabra = "tengounavacalechera"; // Ejemplo de una palabra
     std::vector<std::bitset<14>> gruposDe14Bits;
 
-    size_t i = 0;
-    while (i < palabra.length()) {
-        std::string subcadena = palabra.substr(i, 14);
+    std::string grupoBits; // Cadena temporal para almacenar cada grupo de 14 bits
 
-        // Rellena con ceros si la subcadena es más corta que 14 caracteres
-        while (subcadena.length() < 14) {
-            subcadena += "0";
+    for (char c : palabra) {
+        std::bitset<8> bits(c); // Convierte cada carácter en un objeto std::bitset de 8 bits
+        grupoBits += bits.to_string();
+
+        if (grupoBits.length() == 14) { // Cuando se alcanzan 14 bits, se almacena en el vector
+            gruposDe14Bits.push_back(std::bitset<14>(grupoBits));
+            grupoBits.clear();
         }
+    }
 
-        std::bitset<14> bits(subcadena);
-        gruposDe14Bits.push_back(bits);
-
-        i += 14;
+    // Si queda algún grupo incompleto, agrégale ceros
+    if (!grupoBits.empty()) {
+        while (grupoBits.length() < 14) {
+            grupoBits += "0";
+        }
+        gruposDe14Bits.push_back(std::bitset<14>(grupoBits));
     }
 
     // Imprime los grupos de 14 bits
