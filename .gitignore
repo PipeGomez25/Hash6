@@ -1,32 +1,24 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <string>
+#include <vector>
+#include <bitset>
+using namespace std;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+int main() {
+    string palabra = "tengounavacalechera"; // Ejemplo de una palabra
+    vector<bitset<14>> gruposDe14Bits;
 
-# Precompiled Headers
-*.gch
-*.pch
+    // Itera a través de la palabra para obtener grupos de 14 bits
+    for (size_t i = 0; i + 13 < palabra.length(); i += 14) {
+        string subcadena = palabra.substr(i, 14);
+        bitset<14> bits(subcadena);
+        gruposDe14Bits.push_back(bits);
+    }
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+    // Imprime los grupos de 14 bits
+    for (const bitset<14>& grupo : gruposDe14Bits) {
+        cout << "Grupo de 14 bits: " << grupo << " (Valor operable: " << grupo.to_ulong() << ")" << endl;
+    }
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+    return 0;
+}
